@@ -1,7 +1,11 @@
-package br.com.ucsal.olimpiadas;
+package br.com.ucsal.olimpiadas.domain;
 
 import java.util.Arrays;
 
+/**
+ * Entidade Questao.
+ * Mantém compatibilidade com o modelo original.
+ */
 public class Questao {
 
 	private long id;
@@ -12,6 +16,13 @@ public class Questao {
 	private char alternativaCorreta;
 
 	private String fenInicial;
+
+	// Gerador de ID estático para manter compatibilidade
+	private static long proximoId = 1;
+
+	public Questao() {
+		this.id = proximoId++;
+	}
 
 	public String getFenInicial() {
 		return fenInicial;
@@ -27,6 +38,9 @@ public class Questao {
 
 	public void setId(long id) {
 		this.id = id;
+		if (id >= proximoId) {
+			proximoId = id + 1;
+		}
 	}
 
 	public long getProvaId() {
@@ -61,19 +75,11 @@ public class Questao {
 	}
 
 	public void setAlternativaCorreta(char alternativaCorreta) {
-		this.alternativaCorreta = normalizar(alternativaCorreta);
+		this.alternativaCorreta = ValidadorAlternativa.normalizar(alternativaCorreta);
 	}
 
 	public boolean isRespostaCorreta(char marcada) {
-		return normalizar(marcada) == alternativaCorreta;
+		return ValidadorAlternativa.normalizar(marcada) == alternativaCorreta;
 	}
-
-	public static char normalizar(char c) {
-		char up = Character.toUpperCase(c);
-		if (up < 'A' || up > 'E') {
-			throw new IllegalArgumentException("Alternativa deve estar entre A e E.");
-		}
-		return up;
-	}
-
 }
+
