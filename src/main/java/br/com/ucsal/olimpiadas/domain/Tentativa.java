@@ -1,14 +1,24 @@
-package br.com.ucsal.olimpiadas;
+package br.com.ucsal.olimpiadas.domain;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Entidade Tentativa.
+ * Mantém compatibilidade com o modelo original.
+ */
 public class Tentativa {
 	private long id;
 	private long participanteId;
 	private long provaId;
-
 	private final List<Resposta> respostas = new ArrayList<>();
+
+	// Gerador de ID estático para manter compatibilidade
+	private static long proximoId = 1;
+
+	public Tentativa() {
+		this.id = proximoId++;
+	}
 
 	public long getId() {
 		return id;
@@ -16,6 +26,9 @@ public class Tentativa {
 
 	public void setId(long id) {
 		this.id = id;
+		if (id >= proximoId) {
+			proximoId = id + 1;
+		}
 	}
 
 	public long getParticipanteId() {
@@ -37,5 +50,4 @@ public class Tentativa {
 	public List<Resposta> getRespostas() {
 		return respostas;
 	}
-
 }
