@@ -69,11 +69,7 @@ public class Questao {
 	}
 
 	public static char normalizar(char c) {
-		char up = Character.toUpperCase(c);
-		if (up < 'A' || up > 'E') {
-			throw new IllegalArgumentException("Alternativa deve estar entre A e E.");
-		}
-		return up;
+		return ValidadorAlternativa.normalizar(c);
 	}
 
 }
